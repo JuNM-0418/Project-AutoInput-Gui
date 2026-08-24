@@ -1,10 +1,6 @@
-﻿
-using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelAutoInput
@@ -18,7 +14,6 @@ namespace ExcelAutoInput
         private List<Excel.Worksheet> SelectedSheetList = null;
         private List<Excel.Worksheet> SelectedSurveySheetList = null;
         private List<string> ImgFolderPathList = null;
-
         private int LocationRowTop = 3; // 페이지 내 첫번째 시작 행
         private int LocationColImg = 2; // 사진 삽입 고정 열
         private int ImgCycle = 1;   // 각 동의 폴더에서 넣을 사진의 순서
@@ -71,25 +66,6 @@ namespace ExcelAutoInput
             }
         }
 
-
-        // 결함이 있는 위치를 합쳐주는 수식을 넣어주는 함수
-        //public void InputCombineExcelFunction(Excel.Worksheet workSheet)
-        //{
-        //    this.LocationRowTop = 3;
-
-        //    this.ImgCycle = 1;
-
-        //    for (int i = 0; i < this.GetPageNum(); i++)
-        //    {
-        //        for (int j = 0; j < 3; j++)
-        //        {
-        //            workSheet.Cells[this.LocationRowTop + 1 + (j * 10), 17].Value = workSheet.Cells[this.ImgCycle + 9, 33].Text + "\n" + workSheet.Cells.Cells[this.ImgCycle + 9, 35].Text;
-        //            this.ImgCycle++;
-        //        }
-        //        this.LocationRowTop = this.NextLocationRow(this.LocationRowTop);
-        //    }
-        //}
-
         // 설명 번호와 사진 번호가 맞는지 확인해주는 수식을 넣어주는 함수
         public void InputCheckImgNumFunction(Excel.Worksheet workSheet)
         {
@@ -124,18 +100,18 @@ namespace ExcelAutoInput
                         if (tmp.IndexOf(surveyFilter) != -1)
                         {
     
-                            imgWorkSheet.Cells[this.LocationRowTop + 1 + (j * 10), 17].Formula = ("=" + surveyWorkSheet.Name + "!B" + surveyCycle.ToString() + "&CHAR(10)&" + surveyWorkSheet.Name + "!D" + surveyCycle.ToString());
+                            imgWorkSheet.Cells[this.LocationRowTop + 1 + (j * 10), 17].Formula = ("='" + surveyWorkSheet.Name + "'!B" + surveyCycle.ToString() + "&CHAR(10)&'" + surveyWorkSheet.Name + "'!D" + surveyCycle.ToString());
                             if (surveyWorkSheet.Cells[surveyCycle, 16].Text.ToString() != "-")
                             {
-                                imgWorkSheet.Cells[this.LocationRowTop + 4 + (j * 10), 15].Formula = ("=" + surveyWorkSheet.Name + "!P" + surveyCycle.ToString() + "&" + surveyWorkSheet.Name + "!G" + surveyCycle.ToString());
+                                imgWorkSheet.Cells[this.LocationRowTop + 4 + (j * 10), 15].Formula = ("='" + surveyWorkSheet.Name + "'!P" + surveyCycle.ToString() + "&'" + surveyWorkSheet.Name + "'!G" + surveyCycle.ToString());
                             }
                             else
                             {
-                                imgWorkSheet.Cells[this.LocationRowTop + 4 + (j * 10), 15].Formula = ("=" + surveyWorkSheet.Name + "!G" + surveyCycle.ToString());
+                                imgWorkSheet.Cells[this.LocationRowTop + 4 + (j * 10), 15].Formula = ("='" + surveyWorkSheet.Name + "'!G" + surveyCycle.ToString());
                             }
-                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 15].Formula = ("=" + surveyWorkSheet.Name + "!J" + surveyCycle.ToString());
-                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 17].Formula = ("=" + surveyWorkSheet.Name + "!L" + surveyCycle.ToString());
-                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 19].Formula = ("=" + surveyWorkSheet.Name + "!N" + surveyCycle.ToString());
+                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 15].Formula = ("='" + surveyWorkSheet.Name + "'!J" + surveyCycle.ToString());
+                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 17].Formula = ("='" + surveyWorkSheet.Name + "'!L" + surveyCycle.ToString());
+                            imgWorkSheet.Cells[this.LocationRowTop + 8 + (j * 10), 19].Formula = ("='" + surveyWorkSheet.Name + "'!N" + surveyCycle.ToString());
                             j++;
                             surveyCycle++;
                         }
@@ -161,49 +137,6 @@ namespace ExcelAutoInput
 
         }
 
-        // 조사표 내용 넣어주는 함수
-        //public void InputSurveyData(Excel.Worksheet workSheet)
-        //{
-        //    this.LocationRowTop = 3;
-        //    this.SurveyDataCycle = 1;
-
-        //    for (int i = 0; i < this.GetPageNum(); i++)
-        //    {
-        //        for (int j = 0; j < 3; j++)
-        //        {
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 15].Value = workSheet.Cells[this.SurveyDataCycle + 9, 41];
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 17].Value = workSheet.Cells[this.SurveyDataCycle + 9, 43];
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 19].Value = workSheet.Cells[this.SurveyDataCycle + 9, 45];
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 21].Value = workSheet.Cells[this.SurveyDataCycle + 9, 47];
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 23].Value = workSheet.Cells[this.SurveyDataCycle + 9, 49];
-        //            workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 25].Value = workSheet.Cells[this.SurveyDataCycle + 9, 38];
-        //            this.SurveyDataCycle++;
-        //        }
-        //        this.LocationRowTop = this.NextLocationRow(this.LocationRowTop);
-        //    }
-        //}
-
-        //// 설명 부분 내용을 합성해주는 수식을 삽입하는 함수
-        //public void CombineSurveyData(Excel.Worksheet workSheet)
-        //{
-        //    this.LocationRowTop = 3;
-        //    for (int i = 0; i < this.GetPageNum(); i++)
-        //    {
-        //        for (int j = 0; j < 3; j++)
-        //        {
-        //            if (workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 25].Value == "균열")
-        //            {
-        //                workSheet.Cells[this.LocationRowTop + (j * 10) + 4, 15].Value = "=" + "U" + (this.LocationRowTop + (j * 10 + 8)) + "&" + "\"균열\"";
-        //            }
-        //            else
-        //            {
-        //                workSheet.Cells[this.LocationRowTop + (j * 10) + 4, 15].Value = workSheet.Cells[this.LocationRowTop + (j * 10) + 8, 25];
-        //            }
-        //        }
-        //        this.LocationRowTop = this.NextLocationRow(this.LocationRowTop);
-        //    }
-        //}
-
         // 이미지의 갯수가 3의 배수가 아니면 복사하는 함수
         public void DuplicateImg(string folderPath)
         {
@@ -219,7 +152,6 @@ namespace ExcelAutoInput
             }
             imgList = di.EnumerateFiles("*.jpg", SearchOption.AllDirectories);
         }
-
    
         public void SetFileName(string fileName)
         {

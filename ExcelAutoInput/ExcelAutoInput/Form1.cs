@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -95,7 +94,6 @@ namespace ExcelAutoInput
             else
             {
                 MessageBox.Show("작업 폴더를 선택해주세요", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
             
         }
@@ -104,7 +102,6 @@ namespace ExcelAutoInput
         {
             btnInputImage.Enabled = false;
             btnExit.Enabled = false;
-
             progressBar.Style = ProgressBarStyle.Continuous;
             progressBar.Minimum = 0;
             progressBar.Maximum = imgPathListBox.CheckedItems.Count;
@@ -121,16 +118,10 @@ namespace ExcelAutoInput
                 excelFileInfo.SetPageNum(excelFileInfo.GetSelectedImgFolderPathList()[i]);
                 // 사진 넣어주는 함수
                 excelFileInfo.InputImg(excelFileInfo.GetSelectedSheetList()[i], excelFileInfo.GetSelectedImgFolderPathList()[i]);
-                // 결함 위치를 넣어주는 함수
-                //excelFileInfo.InputCombineExcelFunction(excelFileInfo.GetSelectedSheetList()[i]);
                 // 화살표를 넣어주는 함수
                 excelFileInfo.InputArrow(excelFileInfo.GetSelectedSheetList()[i]);
                 // 설명 번호와 사진 번호가 맞는지 확인하는 수식을 넣어주는 함수
                 excelFileInfo.InputCheckImgNumFunction(excelFileInfo.GetSelectedSheetList()[i]);
-                // 조사표 내용을 넣어주는 함수
-                //excelFileInfo.InputSurveyData(excelFileInfo.GetSelectedSheetList()[i]);
-                // 설명 내용을 합쳐주는 함수
-                //excelFileInfo.CombineSurveyData(excelFileInfo.GetSelectedSheetList()[i]);
                 // 조사표 내용을 연동시켜주는 함수
                 excelFileInfo.InputSurveyData(excelFileInfo.GetSelectedSurveySheetList()[i], excelFileInfo.GetSelectedSheetList()[i]);
 
